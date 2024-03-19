@@ -1,10 +1,12 @@
 package com.practice.springbootpracticejdbctemplate.Customer;
 
 import com.practice.springbootpracticejdbctemplate.Exception.DuplicateConflictException;
+import com.practice.springbootpracticejdbctemplate.Exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -34,5 +36,10 @@ public class CustomerService {
                 customerRegisterRequest.gender()
         );
         customerDAO.addCustomerToDB(customer);
+    }
+
+    // Function to get customer with given id if not found throw error
+    public Customer getCustomerByID(Integer id){
+        return customerDAO.getCustomerByID(id).orElseThrow(()-> new ResourceNotFoundException("Customer with given id: %s not found in the database sorry!..".formatted(id)));
     }
 }

@@ -1,10 +1,7 @@
 package com.practice.springbootpracticejdbctemplate.Customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,7 +23,14 @@ public class CustomerController {
 
     // POST USER TO THE DATABASE WITH API ENDPOINT: http://localhost:8000/testapi/add-customer
     @PostMapping("/testapi/add-customer")
-    public void addCustomer(@RequestBody CustomerRegisterRequest customerRegisterRequest){
+    void addCustomer(@RequestBody CustomerRegisterRequest customerRegisterRequest){
         customerService.addCustomer(customerRegisterRequest);
     }
+
+    // GET USER BY ID FROM DATABASE WITH API ENDPOINT: http://localhost:8000/testapi/customers/{id}
+    @GetMapping("/testapi/customers/{id}")
+    Customer getCustomerByID(@PathVariable("id") Integer id){
+        return customerService.getCustomerByID(id);
+    }
+
 }
