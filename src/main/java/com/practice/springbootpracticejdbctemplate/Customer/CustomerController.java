@@ -40,4 +40,10 @@ public class CustomerController {
         customerService.deleteCustomer(id);
     }
 
+    // UPDATE A CUSTOMER IN DATABASE WITH GIVEN ID THROUGH API ENDPOINT: http://localhost:8000/testapi/update-customer/{id}
+    @PutMapping("/testapi/update-customer/{id}")
+    void updateCustomer( @RequestBody CustomerUpdateRequest customerUpdateRequest,@PathVariable("id") Integer id){
+        customerService.updateCustomer(customerUpdateRequest,id);
+    }
+
 }

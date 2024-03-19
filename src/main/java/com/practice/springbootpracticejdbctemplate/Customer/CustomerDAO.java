@@ -10,4 +10,5 @@ public interface CustomerDAO {
     Optional<Customer> getCustomerByID(Integer id);
     void deleteCustomerFromDB(Integer id);
     boolean existsWithId(Integer id);
+    void updateCustomerInDatabase(Customer customer);
 }

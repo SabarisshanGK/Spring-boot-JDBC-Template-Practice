@@ -52,4 +52,40 @@ public class CustomerService {
             throw new ResourceNotFoundException("Customer with ID %s has been already deleted from database!".formatted(id));
         }
     }
+
+    // Function to update a customer with given id
+    public void updateCustomer(CustomerUpdateRequest customerUpdateRequest,Integer id){
+        boolean checked = false;
+        Customer customer = getCustomerByID(id);
+        if(customerUpdateRequest.name() != null && !customerUpdateRequest.name().equals(customer.getName())){
+            customer.setName(customerUpdateRequest.name());
+            checked = true;
+        }
+        if(customerUpdateRequest.email() != null && !customerUpdateRequest.email().equals(customer.getEmail())){
+            String email = customerUpdateRequest.email();
+            if(customerDAO.existsWithEmail(email)){
+                throw new ResourceNotFoundException("Already exists");
+            }
+            customer.setEmail(email);
+            checked = true;
+        }
+        if(customerUpdateRequest.age() != null && !customerUpdateRequest.age().equals(customer.getAge())){
+            customer.setAge(customerUpdateRequest.age());
+            checked = true;
+        }
+        if(customerUpdateRequest.country() != null && !customerUpdateRequest.country().equals(customer.getCountry())){
+            customer.setCountry(customerUpdateRequest.country());
+            checked = true;
+        }
+        if(customerUpdateRequest.gender() != null && !customerUpdateRequest.gender().equals(customer.getGender())){
+            customer.setGender(customerUpdateRequest.gender());
+            checked = true;
+        }
+
+        if(!checked){
+            throw new DuplicateConflictException("No changes Found");
+        }
+
+        customerDAO.updateCustomerInDatabase(customer);
+    }
 }

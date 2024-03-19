@@ -95,4 +95,39 @@ public class CustomerJDBCDataAccessService implements CustomerDAO {
         Integer count = jdbcTemplate.queryForObject(sql,Integer.class,id);
         return count != null && count > 0;
     }
+
+    // Function to update customer with given Id and specified details in database
+    @Override
+    public void updateCustomerInDatabase(Customer customer) {
+        if(customer.getName() != null ){
+            var sql = """
+                    UPDATE customertable SET name = ? WHERE id = ?
+                    """;
+            jdbcTemplate.update(sql,customer.getName(),customer.getId());
+        }
+        if(customer.getAge() != null){
+            var sql = """
+                    UPDATE customertable SET age = ? WHERE id = ?
+                    """;
+            jdbcTemplate.update(sql,customer.getAge(),customer.getId());
+        }
+        if(customer.getEmail() != null){
+            var sql = """
+                    UPDATE customertable SET email = ? WHERE id = ?
+                    """;
+            jdbcTemplate.update(sql,customer.getEmail(),customer.getId());
+        }
+        if(customer.getCountry() != null){
+            var sql = """
+                    UPDATE customertable SET country = ? WHERE id = ?
+                    """;
+            jdbcTemplate.update(sql,customer.getCountry(),customer.getId());
+        }
+        if(customer.getGender() != null){
+            var sql = """
+                    UPDATE customertable SET gender = ? WHERE id = ?
+                    """;
+            jdbcTemplate.update(sql,customer.getGender(),customer.getId());
+        }
+    }
 }
