@@ -57,6 +57,7 @@ public class CustomerJDBCDataAccessService implements CustomerDAO {
         jdbcTemplate.update(sql,customer.getName(),customer.getAge(),customer.getEmail(),customer.getCountry(),customer.getGender());
     }
 
+    // Function to get user from database with given ID
     @Override
     public Optional<Customer> getCustomerByID(Integer id) {
         var sql = """
@@ -74,5 +75,24 @@ public class CustomerJDBCDataAccessService implements CustomerDAO {
             return customer;
         };
         return jdbcTemplate.query(sql,customerRowMapper,id).stream().findFirst();
+    }
+
+    // Function to delete a Customer from database
+    @Override
+    public void deleteCustomerFromDB(Integer id) {
+        var sql = """
+                DELETE FROM customertable WHERE id = ?
+                """;
+        jdbcTemplate.update(sql,id);
+    }
+
+    // Function to find whether The user with given id is present in database or not
+    @Override
+    public boolean existsWithId(Integer id) {
+        var sql = """
+                SELECT count(id) FROM customertable WHERE id = ?
+                """;
+        Integer count = jdbcTemplate.queryForObject(sql,Integer.class,id);
+        return count != null && count > 0;
     }
 }

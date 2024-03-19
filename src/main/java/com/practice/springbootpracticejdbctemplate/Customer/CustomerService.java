@@ -42,4 +42,14 @@ public class CustomerService {
     public Customer getCustomerByID(Integer id){
         return customerDAO.getCustomerByID(id).orElseThrow(()-> new ResourceNotFoundException("Customer with given id: %s not found in the database sorry!..".formatted(id)));
     }
+
+    // Function to find and delete Customer from database with given id
+    public void deleteCustomer(Integer id){
+        if(customerDAO.existsWithId(id)){
+            customerDAO.deleteCustomerFromDB(id);
+        }
+        else {
+            throw new ResourceNotFoundException("Customer with ID %s has been already deleted from database!".formatted(id));
+        }
+    }
 }

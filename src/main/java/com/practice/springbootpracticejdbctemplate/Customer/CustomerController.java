@@ -33,4 +33,11 @@ public class CustomerController {
         return customerService.getCustomerByID(id);
     }
 
+
+    // DELETE USER WITH GIVEN ID FROM DATABASE WITH API ENDPOINT: http://localhost:8000/testapi/delete-customer/{id}
+    @DeleteMapping("/testapi/delete-customer/{id}")
+    void deleteCustomer(@PathVariable("id") Integer id){
+        customerService.deleteCustomer(id);
+    }
+
 }
